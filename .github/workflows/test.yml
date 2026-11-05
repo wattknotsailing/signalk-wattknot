@@ -1,0 +1,22 @@
+# The gate, on every push and pull request: the suite at its 100% coverage
+# threshold (jest.config.js). The publish workflow runs the same command
+# before it publishes; this one is so a red push is seen before it is tagged.
+# Actions are pinned to commit SHAs (the tag beside each), so a moved tag
+# cannot change what runs here.
+name: test
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test

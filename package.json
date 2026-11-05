@@ -1,0 +1,55 @@
+{
+  "name": "signalk-wattknot",
+  "version": "0.2.0",
+  "description": "Streams a boat's NMEA 2000 bus and Victron GX data to a Wattknot hub",
+  "main": "index.js",
+  "license": "Apache-2.0",
+  "author": "Wattknot",
+  "files": [
+    "index.js",
+    "lib/**",
+    "!lib/**/*.test.js",
+    "docs/**",
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "icon.png",
+    "npm-shrinkwrap.json"
+  ],
+  "keywords": [
+    "signalk-node-server-plugin",
+    "signalk-category-nmea-2000",
+    "signalk-category-cloud"
+  ],
+  "signalk": {
+    "displayName": "Wattknot Plugin",
+    "appIcon": "./icon.png"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wattknotsailing/signalk-wattknot.git"
+  },
+  "homepage": "https://github.com/wattknotsailing/signalk-wattknot#readme",
+  "bugs": {
+    "url": "https://github.com/wattknotsailing/signalk-wattknot/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "@canboat/pgns": "^6.0.2",
+    "dbus-native": "^0.16.2",
+    "mqtt": "^5.16.1",
+    "ws": "^8.22.0"
+  },
+  "devDependencies": {
+    "aedes": "^0.51.3",
+    "jest": "^30.5.2"
+  }
+}

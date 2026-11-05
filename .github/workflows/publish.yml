@@ -1,0 +1,32 @@
+# Publishes a tagged release to npm through trusted publishing (README
+# "Release"): GitHub mints an OIDC token for this workflow, npm checks it
+# against the trusted publisher configured on the package (this repository,
+# this filename), and attaches provenance. No npm token exists anywhere.
+#
+# This is the one job that holds id-token: write, so everything it runs is
+# pinned: the actions to commit SHAs (the tag beside each), and npm to an
+# exact version — trusted publishing needs 11.5.1 or later
+# (docs.npmjs.com/trusted-publishers), and the runner's bundled npm is not
+# relied on to be that.
+name: publish
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+  id-token: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - run: npm install -g npm@11.21.1
+      - name: The tag must equal the package version
+        run: test "$GITHUB_REF_NAME" = "v$(node -p 'require("./package.json").version')"
+      - run: npm ci
+      - run: npm test
+      - run: npm publish
