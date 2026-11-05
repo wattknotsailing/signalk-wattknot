@@ -1059,6 +1059,9 @@ describe('the Victron feed', () => {
       const dbusFake = withRelay((msg, cb) => { sets.push(msg); cb(null, 0) })
       const { app } = await startWithVictron({ dbusFake, settings: { allowSwitches: true } })
       await until(() => connects.length === 1)
+      // The flag is published after the feed subscribes on the same connection,
+      // so once a late subscriber has it the broker will deliver a W/ to the feed.
+      await flagSeen()
 
       await publish(SOC_W, '{"value":5}')
       await publish(`W/${PORTAL}/system/0/SwitchableOutput/9/State`, '{"value":1}')
@@ -1078,6 +1081,9 @@ describe('the Victron feed', () => {
       const dbusFake = withRelay((msg, cb) => { sets.push(msg); process.nextTick(cb, null, 0) })
       const { app } = await startWithVictron({ dbusFake, settings: { allowSwitches: true } })
       await until(() => connects.length === 1)
+      // The flag is published after the feed subscribes on the same connection,
+      // so once a late subscriber has it the broker will deliver a W/ to the feed.
+      await flagSeen()
 
       for (let i = 0; i < 3; i++) await publish(SOC_W, '{"value":5}')
       await until(() => refusals(app).length === 3)
@@ -1105,6 +1111,9 @@ describe('the Victron feed', () => {
       const dbusFake = withRelay((msg, cb) => process.nextTick(cb, null, -1))
       const { app } = await startWithVictron({ dbusFake, settings: { allowSwitches: true } })
       await until(() => connects.length === 1)
+      // The flag is published after the feed subscribes on the same connection,
+      // so once a late subscriber has it the broker will deliver a W/ to the feed.
+      await flagSeen()
 
       await publish(RELAY_W, '{"value":1}')
       await until(() => app.logged.some(([, text]) => text.startsWith('write ')))
