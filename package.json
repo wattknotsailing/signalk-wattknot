@@ -1,6 +1,6 @@
 {
   "name": "signalk-wattknot",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Streams a boat's NMEA 2000 bus and Victron GX data to a Wattknot hub",
   "main": "index.js",
   "license": "Apache-2.0",

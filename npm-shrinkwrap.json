@@ -1,12 +1,12 @@
 {
   "name": "signalk-wattknot",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "signalk-wattknot",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "license": "Apache-2.0",
       "dependencies": {
         "@canboat/pgns": "^6.0.2",
