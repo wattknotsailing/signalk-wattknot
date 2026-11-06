@@ -20,6 +20,14 @@ a Victron GX that is Venus OS Large with Signal K enabled and a CAN
 connection configured — and a Wattknot hub reachable through the cloud. The
 hub's **Boat ID** and **Token** come from Wattknot when the hub is set up.
 
+The server must run on **Node 20 or newer** (`engines` in `package.json`;
+Venus OS Large 3.85 ships Node 24, and `node -v` on the GX tells you). From
+Node 20 a dial tries the hub's IPv6 and IPv4 addresses together, so a boat
+whose internet is IPv6-only — some Starlink installations are — connects;
+Node 18 dials one address and, when that is the unreachable one, waits out
+its timeout on every attempt. The first beta boat was exactly that
+(2026-11-05). Signal K's own current server needs Node 22 in any case.
+
 1. In Signal K, open **Appstore**, search for *Wattknot*, and install
    **signalk-wattknot**. Restart the server if it asks.
 2. Open **Server → Plugin Config → Wattknot Plugin**. Paste the Boat ID and
